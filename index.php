@@ -8,12 +8,6 @@ declare(strict_types=1);
 
 // We are going to use session variables so we need to enable sessions
 session_start();
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['street'] = $_POST['street'];
-$_SESSION['streetnumber'] = $_POST['streetnumber'];
-$_SESSION['city'] = $_POST['city'];
-$_SESSION['zipcode'] = $_POST['zipcode'];
-$_SESSION['products'] = $_POST['products'];
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
@@ -38,29 +32,34 @@ $totalValue = 0;
 
 function validate()
 {
-    // This function will send a list of invalid fields back
     return [];
 }
 
 function handleForm()
 {
-    // TODO: form related tasks (step 1)
-    
-    echo "<p>Thank you for your order!</p>";
-    echo "<p>E-mail - {$_SESSION['email']} <br>Address - {$_SESSION['street']} {$_SESSION['streetnumber']} <br>Zipcode - {$_SESSION['zipcode']} City - {$_SESSION['city']}</p>";
-    echo "<p>Order - ";
-    echo "</p>";
     // Validation (step 2)
     $invalidFields = validate();
     if (!empty($invalidFields)) {
         // TODO: handle errors
     } else {
         // TODO: handle successful submission
+        // TODO: form related tasks (step 1)
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['street'] = $_POST['street'];
+        $_SESSION['streetnumber'] = $_POST['streetnumber'];
+        $_SESSION['city'] = $_POST['city'];
+        $_SESSION['zipcode'] = $_POST['zipcode'];
+        $_SESSION['products'] = $_POST['products'];
+        echo "<script type='text/javascript'> alert('Thank you for your order! \\n E-mail - {$_SESSION['email']} \\n Address - {$_SESSION['street']} {$_SESSION['streetnumber']} \\n Zipcode - {$_SESSION['zipcode']} \\n City - {$_SESSION['city']} \\n Order - ";
+        // TODO add selected products
+        echo "')</script>";
     }
 }
 
 // TODO: replace this if by an actual check
-whatIsHappening();
-handleForm();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    handleForm();
+}
+
 
 require 'form-view.php';

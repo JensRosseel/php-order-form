@@ -76,7 +76,6 @@
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in everyday items.</footer>
 </div>
-
 <style>
     footer {
         text-align: center;
