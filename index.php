@@ -50,8 +50,16 @@ function handleForm()
         $_SESSION['city'] = $_POST['city'];
         $_SESSION['zipcode'] = $_POST['zipcode'];
         $_SESSION['products'] = $_POST['products'];
-        echo "<script type='text/javascript'> alert('Thank you for your order! \\n E-mail - {$_SESSION['email']} \\n Address - {$_SESSION['street']} {$_SESSION['streetnumber']} \\n Zipcode - {$_SESSION['zipcode']} \\n City - {$_SESSION['city']} \\n Order - ";
-        // TODO add selected products
+        echo "<script type='text/javascript'> alert('Thank you for your order! \\n E-mail - {$_SESSION['email']} \\n Address - {$_SESSION['street']} {$_SESSION['streetnumber']} \\n Zipcode - {$_SESSION['zipcode']} \\n City - {$_SESSION['city']} \\n Order: ";
+        if($_SESSION['products'][0] != NULL){
+            echo "\\n Holy Grail - 500";
+        }
+        if($_SESSION['products'][1] != NULL){
+            echo "\\n Golden Fleece - 250";              
+        }
+        if($_SESSION['products'][2] != NULL){
+            echo "\\n Excalibur - 10";
+        }
         echo "')</script>";
     }
 }
