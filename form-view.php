@@ -15,18 +15,16 @@
 <div class="container">
     <h1>Place your order</h1>
     <?php // Navigation for when you need it ?>
-    <?php /*
     <nav>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link active" href="?food=1">Order food</a>
+                <a class="nav-link active" href="?mythical=1">Order ordinairy items</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?food=0">Order drinks</a>
+                <a class="nav-link" href="?mythical=0">Order nothing</a>
             </li>
         </ul>
     </nav>
-    */ ?>
     <div id="error"></div>
     <form method="post">
         <div class="form-row">

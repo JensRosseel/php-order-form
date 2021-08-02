@@ -28,11 +28,18 @@ function whatIsHappening() {
 }
 
 // TODO: provide some products (you may overwrite the example)
-$products = [
-    ['name' => 'Holy Grail', 'price' => 500],
-    ['name' => 'Golden Fleece', 'price' => 250],
-    ['name' => 'Excalibur', 'price' => 10]
-];
+$products = [];
+
+if($_GET['mythical'] == 1){
+    array_push($products, ['name' => 'Holy Grail', 'price' => 500]);
+    array_push($products, ['name' => 'Golden Fleece', 'price' => 250]);
+    array_push($products, ['name' => 'Excalibur', 'price' => 10]);
+}
+else{
+    array_push($products, ['name' => 'A load of nothing', 'price' => 1000]);
+    array_push($products, ['name' => 'A bit of nothing', 'price' => 150]);
+    array_push($products, ['name' => 'A sprinkle of nothing', 'price' => 10]);
+}
 
 $totalValue = 0;
 
@@ -94,13 +101,28 @@ function handleForm()
         $_SESSION['products'] = $_POST['products'];
         echo "<script type='text/javascript'> alert('Thank you for your order! \\n E-mail - {$_SESSION['email']} \\n Address - {$_SESSION['street']} {$_SESSION['streetnumber']} \\n Zipcode - {$_SESSION['zipcode']} \\n City - {$_SESSION['city']} \\n Order: ";
         if(!empty($_SESSION['products'][0])){
-            echo "\\n Holy Grail - 500";
+            if($_GET['mythical'] == 1){
+                echo "\\n Holy Grail - €500.00";
+            }
+            else{
+                echo "\\n A load of nothing - €1000.00";   
+            }
         }
         if(!empty($_SESSION['products'][1])){
-            echo "\\n Golden Fleece - 250";              
+            if($_GET['mythical'] == 1){
+                echo "\\n Golden Fleece - €250.00"; 
+            }
+            else{
+                echo "\\n A bit of nothing - €250.00";   
+            }
         }
         if(!empty($_SESSION['products'][2])){
-            echo "\\n Excalibur - 10";
+            if($_GET['mythical'] == 1){
+                echo "\\n Excalibur - €10.00";
+            }
+            else{
+                echo "\\n A sprinkle of nothing - €10.00";   
+            }
         }
         echo "')</script>";
     }
@@ -110,5 +132,5 @@ require 'form-view.php';
 // TODO: replace this if by an actual check
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     handleForm();
-    refill();
 }
+refill();
