@@ -63,6 +63,25 @@ function validate()
     return $error;
 }
 
+function refill(){
+    echo "<script type='text/javascript'> ";
+    echo "document.getElementById('email').value = '{$_SESSION['email']}'; ";
+    echo "document.getElementById('street').value = '{$_SESSION['street']}'; ";
+    echo "document.getElementById('streetnumber').value = '{$_SESSION['streetnumber']}'; ";
+    echo "document.getElementById('city').value = '{$_SESSION['city']}'; ";
+    echo "document.getElementById('zipcode').value = '{$_SESSION['zipcode']}'; ";
+    if($_SESSION['products'][0] == 1){
+        echo "document.getElementById('products[0]').checked = true; ";
+    }
+    if($_SESSION['products'][1] == 1){
+        echo "document.getElementById('products[1]').checked = true; ";
+    }
+    if($_SESSION['products'][2] == 1){
+        echo "document.getElementById('products[2]').checked = true; ";
+    }
+    echo "</script>";
+}
+
 function handleForm()
 {
     // Validation (step 2)
@@ -91,6 +110,5 @@ require 'form-view.php';
 // TODO: replace this if by an actual check
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     handleForm();
+    refill();
 }
-
-session_destroy();
