@@ -8,6 +8,12 @@ declare(strict_types=1);
 
 // We are going to use session variables so we need to enable sessions
 session_start();
+$_SESSION['email'] = $_POST['email'];
+$_SESSION['street'] = $_POST['street'];
+$_SESSION['streetnumber'] = $_POST['streetnumber'];
+$_SESSION['city'] = $_POST['city'];
+$_SESSION['zipcode'] = $_POST['zipcode'];
+$_SESSION['products'] = $_POST['products'];
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
@@ -32,42 +38,59 @@ $totalValue = 0;
 
 function validate()
 {
-    return [];
+    $error = "";
+    if (empty($_POST["email"])) {
+        $error = "Email is required";
+    } 
+    else if (empty($_POST["street"])) {
+        $error = "Street is required";
+    } 
+    else if (empty($_POST["streetnumber"])) {
+        $error = "Streetnumber is required";
+    } 
+    else if (empty($_POST["city"])) {
+        $error = "City is required";
+    } 
+    else if (empty($_POST["zipcode"])) {
+        $error = "Zipcode is required";
+    } 
+    else if (empty($_POST["products"][0]) && empty($_POST["products"][1]) && empty($_POST["products"][2])) {
+        $error = "A product is required";
+    } 
+    else if (!preg_match('/^([0-9]+)$/', $_POST['zipcode'])){
+        $error = "Zipcode can only contain numbers";
+    }
+    return $error;
 }
 
 function handleForm()
 {
     // Validation (step 2)
-    $invalidFields = validate();
-    if (!empty($invalidFields)) {
+    $error = validate();
+    if ($error != "") {
         // TODO: handle errors
+        echo "<script type='text/javascript'> document.getElementById('error').innerHTML = '{$error}'; document.getElementById('error').setAttribute('class', 'alert alert-warning');</script>";
     } else {
         // TODO: handle successful submission
-        // TODO: form related tasks (step 1)
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['street'] = $_POST['street'];
-        $_SESSION['streetnumber'] = $_POST['streetnumber'];
-        $_SESSION['city'] = $_POST['city'];
-        $_SESSION['zipcode'] = $_POST['zipcode'];
         $_SESSION['products'] = $_POST['products'];
         echo "<script type='text/javascript'> alert('Thank you for your order! \\n E-mail - {$_SESSION['email']} \\n Address - {$_SESSION['street']} {$_SESSION['streetnumber']} \\n Zipcode - {$_SESSION['zipcode']} \\n City - {$_SESSION['city']} \\n Order: ";
-        if($_SESSION['products'][0] != NULL){
+        if(!empty($_SESSION['products'][0])){
             echo "\\n Holy Grail - 500";
         }
-        if($_SESSION['products'][1] != NULL){
+        if(!empty($_SESSION['products'][1])){
             echo "\\n Golden Fleece - 250";              
         }
-        if($_SESSION['products'][2] != NULL){
+        if(!empty($_SESSION['products'][2])){
             echo "\\n Excalibur - 10";
         }
         echo "')</script>";
     }
 }
-
+whatIsHappening();
+require 'form-view.php';
 // TODO: replace this if by an actual check
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     handleForm();
 }
 
-
-require 'form-view.php';
+session_destroy();
