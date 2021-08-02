@@ -8,12 +8,24 @@ declare(strict_types=1);
 
 // We are going to use session variables so we need to enable sessions
 session_start();
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['street'] = $_POST['street'];
-$_SESSION['streetnumber'] = $_POST['streetnumber'];
-$_SESSION['city'] = $_POST['city'];
-$_SESSION['zipcode'] = $_POST['zipcode'];
-$_SESSION['products'] = $_POST['products'];
+if(isset($_POST['email'])){
+    $_SESSION['email'] = $_POST['email'];
+}
+if(isset($_POST['street'])){
+    $_SESSION['street'] = $_POST['street'];
+}
+if(isset($_POST['streetnumber'])){
+    $_SESSION['streetnumber'] = $_POST['streetnumber'];
+}
+if(isset($_POST['city'])){
+    $_SESSION['city'] = $_POST['city'];
+}
+if(isset($_POST['zipcode'])){
+    $_SESSION['zipcode'] = $_POST['zipcode'];
+}
+if(isset($_POST['products'])){
+    $_SESSION['products'] = $_POST['products'];
+}
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
@@ -127,7 +139,6 @@ function handleForm()
         echo "')</script>";
     }
 }
-whatIsHappening();
 require 'form-view.php';
 // TODO: replace this if by an actual check
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
