@@ -5,27 +5,10 @@
 
 // This line makes PHP behave in a more strict way
 declare(strict_types=1);
+require 'Product.php';
 
 // We are going to use session variables so we need to enable sessions
 session_start();
-if(isset($_POST['email'])){
-    $_SESSION['email'] = $_POST['email'];
-}
-if(isset($_POST['street'])){
-    $_SESSION['street'] = $_POST['street'];
-}
-if(isset($_POST['streetnumber'])){
-    $_SESSION['streetnumber'] = $_POST['streetnumber'];
-}
-if(isset($_POST['city'])){
-    $_SESSION['city'] = $_POST['city'];
-}
-if(isset($_POST['zipcode'])){
-    $_SESSION['zipcode'] = $_POST['zipcode'];
-}
-if(isset($_POST['products'])){
-    $_SESSION['products'] = $_POST['products'];
-}
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
@@ -43,14 +26,14 @@ function whatIsHappening() {
 $products = [];
 
 if($_GET['mythical'] == 1){
-    array_push($products, ['name' => 'Holy Grail', 'price' => 500]);
-    array_push($products, ['name' => 'Golden Fleece', 'price' => 250]);
-    array_push($products, ['name' => 'Excalibur', 'price' => 10]);
+    array_push($products, new Product('Holy Grail', 500));
+    array_push($products, new Product('Golden Fleece', 250));
+    array_push($products, new Product('Excalibur', 10));
 }
 else{
-    array_push($products, ['name' => 'A load of nothing', 'price' => 1000]);
-    array_push($products, ['name' => 'A bit of nothing', 'price' => 150]);
-    array_push($products, ['name' => 'A sprinkle of nothing', 'price' => 10]);
+    array_push($products, new Product('A load of nothing', 1000));
+    array_push($products, new Product('A bit of nothing', 150));
+    array_push($products, new Product('A sprinkle of nothing', 10));
 }
 
 $totalValue = 0;
@@ -58,27 +41,65 @@ $totalValue = 0;
 function validate()
 {
     $error = "";
-    if (empty($_POST["email"])) {
+    if (empty($_POST["email"])) 
+    {
         $error = "Email is required";
+        $_SESSION['email'] = '';
     } 
-    else if (empty($_POST["street"])) {
+    else 
+    {
+        $_SESSION['email'] = $_POST['email'];
+    }
+    if (empty($_POST["street"])) 
+    {
         $error = "Street is required";
+        $_SESSION['street'] = '';
     } 
-    else if (empty($_POST["streetnumber"])) {
+    else
+    {
+        $_SESSION['street'] = $_POST['street'];
+    } 
+    if (empty($_POST["streetnumber"])) 
+    {
         $error = "Streetnumber is required";
+        $_SESSION['streetnumber'] = '';
     } 
-    else if (empty($_POST["city"])) {
+    else
+    {
+        $_SESSION['streetnumber'] = $_POST['streetnumber'];
+    }
+    if (empty($_POST["city"])) 
+    {
         $error = "City is required";
+        $_SESSION['city'] = '';
     } 
-    else if (empty($_POST["zipcode"])) {
+    else
+    {
+        $_SESSION['city'] = $_POST['city'];
+    }
+    if (empty($_POST["zipcode"])) 
+    {
         $error = "Zipcode is required";
+        $_SESSION['zipcode'] = '';
     } 
-    else if (empty($_POST["products"][0]) && empty($_POST["products"][1]) && empty($_POST["products"][2])) {
+    else if (!preg_match('/^([0-9]+)$/', $_POST['zipcode']))
+    {
+        $error = "Zipcode can only contain numbers";
+        $_SESSION['zipcode'] = '';
+    }
+    else
+    {
+        $_SESSION['zipcode'] = $_POST['zipcode'];
+    }
+    if (empty($_POST["products"][0]) && empty($_POST["products"][1]) && empty($_POST["products"][2])) 
+    {
         $error = "A product is required";
     } 
-    else if (!preg_match('/^([0-9]+)$/', $_POST['zipcode'])){
-        $error = "Zipcode can only contain numbers";
+    else
+    {
+        $_SESSION['products'] = $_POST['products'];
     }
+    
     return $error;
 }
 
