@@ -144,4 +144,6 @@ require 'form-view.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     handleForm();
 }
+
 refill();
+
